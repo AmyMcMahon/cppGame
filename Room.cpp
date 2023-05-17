@@ -23,7 +23,7 @@ void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
 string Room::shortDescription() {
     return description;
 }
-string Room:: getOrder(string currentR, string inv){
+string Room:: getOrder(string currentR, string inv, string command, string objectIn){
     return "true";
 }
 //string Room::longDescription() {

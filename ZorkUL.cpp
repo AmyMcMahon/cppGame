@@ -55,7 +55,7 @@ void ZorkUL::createRooms()  {
     office->addItem(new Item("safe", "Office", 2, 4));
     office->addItem(new Item("codes", "Bedroom", 3, 2));
     office->addItem(new Item("bookcase", "Office", 2, 0));
-    office->addItem(new Item("looseBook", "Office", 1, 4));
+    office->addItem(new Item("book", "Office", 1, 4));
     entryway = new toEscape("Entryway");
     entryway->addItem(new Item("lock", "Entryway", 2, 4));
     bathroom = new toEscape("Bathroom");
@@ -145,7 +145,7 @@ string ZorkUL::processCommand(Command command) {
     else if (commandWord.compare("go") == 0){
         string inv = currentCharacter->printInventory();
         string getRoom = currentRoom->shortDescription();
-        string moveOn = currentRoom->getOrder(getRoom, inv);
+        string moveOn = currentRoom->getOrder(getRoom, inv, commandWord, " ");
         if (moveOn == "true"){
             string room = goRoom(command);
             return room;
@@ -173,9 +173,12 @@ string ZorkUL::processCommand(Command command) {
                     if (value == 2){
                         strO += "You cannot take this item but you can use another item on it";
                     } else {
+                        string inv = currentCharacter->printInventory();
+                        string getRoom = currentRoom->shortDescription();
+                        string moveOn = currentRoom->getOrder(getRoom, inv, commandWord, command.getSecondWord());
                         currentCharacter->addItem(currentItem);
                         currentRoom->removeItemFromRoom(location);
-                        strO += "item is in room \n" + currentRoom->longDescription();
+                        strO += moveOn;
                     }
                 }
                 return strO;
@@ -196,13 +199,15 @@ string ZorkUL::processCommand(Command command) {
                 }
                 else {
                     int canUse = itemToPut.getRoomToUse(currentRoom->shortDescription());
-                    str1 += "value: " + to_string(canUse) + "\n";
                     if (canUse == 3){
                         str1 += "You cannot use this item in this room \n";
                     } else {
+                        string inv = currentCharacter->printInventory();
+                        string getRoom = currentRoom->shortDescription();
+                        string moveOn = currentRoom->getOrder(getRoom, inv, commandWord, command.getSecondWord());
                         currentRoom->addItem(&itemToPut);
                         currentCharacter->putItem(&itemToPut);
-                        str1 += "And you manage to sucessfully \n" + currentRoom->longDescription();
+                        str1 += moveOn;
                     }
                 }
                 return str1;
@@ -223,6 +228,7 @@ string ZorkUL::processCommand(Command command) {
                 }
                 else {
                     int canUse = itemToPut.getRoomToUse(currentRoom->shortDescription());
+
                     int function = itemToPut.getFunction();
                     //str1 += "value: " + to_string(canUse) + "\n";
                     if (canUse == 3){
@@ -232,8 +238,10 @@ string ZorkUL::processCommand(Command command) {
                         str1 += "You cannot perform this action with this item, try another";
                     }
                     else{
-                        currentCharacter->putItem(&itemToPut);
-                        str1 += "And you manage to sucessfully \n" + currentRoom->longDescription();
+                        string inv = currentCharacter->printInventory();
+                        string getRoom = currentRoom->shortDescription();
+                        string moveOn = currentRoom->getOrder(getRoom, inv, commandWord, command.getSecondWord());
+                        str1 += moveOn;
                     }
                 }
                 return str1;
@@ -308,8 +316,11 @@ string ZorkUL::processCommand(Command command) {
                     if (function != 4){
                         str1 += "You cannot perform this action with this item, try another \n";
                     } else {
+                        string inv = currentCharacter->printInventory();
+                        string getRoom = currentRoom->shortDescription();
+                        string moveOn = currentRoom->getOrder(getRoom, inv, commandWord, command.getSecondWord());
                         currentRoom->removeItemFromRoom(location);
-                        str1 += "you have sucessfully opened the " + command.getSecondWord();
+                        str1 += moveOn;
                     }
                     currentCharacter->putItem(&itemToPut);
                 }

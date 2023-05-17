@@ -24,7 +24,7 @@ public:
     void setExits(Room *north, Room *east, Room *south, Room *west);
     string shortDescription();
     virtual string longDescription() = 0;
-    virtual string getOrder(string currentR, string inv);
+    virtual string getOrder(string currentR, string inv, string command, string objectIn);
     Room* nextRoom(string direction);
     void addItem(Item *inItem);
     string displayItem();
