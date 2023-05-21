@@ -39,17 +39,18 @@ void ZorkUL::createRooms()  {
     attic->addItem(new Item("key", "Office", 1, 2));
     attic->addItem(new Item("flashlight", "attic", 1, 2));
     livingRoom = new toEscape("Living Room");
-    livingRoom->addItem(new Item("door", "Living Room" , 2, 0));
+    livingRoom->addItem(new Item("boards", "Living Room" , 2, 0));
+    livingRoom->addItem(new Item("lock", "Living Room" , 2, 4));
     bedroom = new toEscape("Bedroom");
     bedroom->addItem(new Item("hammer", "Landing", 3, 2));
-    bedroom->addItem(new Item("combinationLock", "Bedroom", 2, 4));
+    bedroom->addItem(new Item("lock", "Bedroom", 2, 4));
     utility = new toEscape("Utility");
     utility->addItem(new Item("dog", "Utility", 2, 0));
-    utility->addItem(new Item("dog food", "Utility", 1, 2));
+    utility->addItem(new Item("treats", "Utility", 1, 2));
     utility->addItem(new Item("press", "Utility", 2, 4));
     kitchen = new toEscape("Kitchen");
     kitchen->addItem(new Item("fire", "Kitchen", 2, 0));
-    kitchen->addItem(new Item("fireExtinguisher", "Kitchen", 1, 2));
+    kitchen->addItem(new Item("extinguisher", "Kitchen", 1, 2));
     kitchen->addItem(new Item("key", "Living Room", 3, 2));
     office = new toEscape("Office");
     office->addItem(new Item("safe", "Office", 2, 4));
@@ -60,9 +61,9 @@ void ZorkUL::createRooms()  {
     entryway->addItem(new Item("lock", "Entryway", 2, 4));
     bathroom = new toEscape("Bathroom");
     bathroom->addItem(new Item("uvLight", "Bathroom", 1, 2));
-    bathroom->addItem(new Item("combinationLock", "Bathroom", 2, 4));
+    bathroom->addItem(new Item("lock", "Bathroom", 2, 4));
     landing = new toEscape("Landing");
-    landing->addItem(new Item("lockedDoor", "Landing", 2, 3));
+    landing->addItem(new Item("door", "Landing", 2, 3));
     landing->addItem(new Item("vase", "Landing", 2, 3));
     landing->addItem(new Item("key", "Landing", 1, 2));
     escape = new Escape("Escape");
@@ -241,6 +242,9 @@ string ZorkUL::processCommand(Command command) {
                         string inv = currentCharacter->printInventory();
                         string getRoom = currentRoom->shortDescription();
                         string moveOn = currentRoom->getOrder(getRoom, inv, commandWord, command.getSecondWord());
+                        if (command.getSecondWord()=="key"){
+                            currentCharacter->putItem(&itemToPut);
+                        }
                         str1 += moveOn;
                     }
                 }
@@ -275,7 +279,10 @@ string ZorkUL::processCommand(Command command) {
                         str1 += "You cannot perform this action with this item, try another \n";
                     } else {
                         currentRoom->removeItemFromRoom(location);
-                        str1 += "you have sucessfully smashed the " + command.getSecondWord();
+                        string inv = currentCharacter->printInventory();
+                        string getRoom = currentRoom->shortDescription();
+                        string moveOn = currentRoom->getOrder(getRoom, inv, commandWord, command.getSecondWord());
+                        str1 += moveOn;
                     }
                     currentCharacter->putItem(&itemToPut);
                 }
@@ -302,7 +309,7 @@ string ZorkUL::processCommand(Command command) {
                             str1 += "You must have the key in your inventory. \n" + currentRoom->longDescription() + "\n";
                             return str1;
                         }
-                    }else if(command.getSecondWord() == "combinationLock"){
+                    }else if(command.getSecondWord() == "lock"){
                         Item key = currentCharacter->hasItem("codes");
                         if(key.getShortDescription().compare("Nothing") == 0){
                             str1 += "You must have the codes in your inventory. \n" + currentRoom->longDescription() + "\n";
