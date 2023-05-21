@@ -5,6 +5,7 @@
 toEscape::toEscape(string description) : Room(description) {}
 
 string toEscape :: longDescription() {
+    qDebug() << description;
     if (description == "attic"){
         return "You are in the attic, it is pitch black. \n You feel around and find a flashlight.";
     } else if (description == "Office"){
@@ -19,6 +20,8 @@ string toEscape :: longDescription() {
         return "In the utility there is a large dog blocking the door.\n You look to the right and see a press.";
     }else if (description == "Living Room") {
         return "In the Living Room you see a borded up door.\n You need to smash the boards.";
+    }else if (description == "Kitchen") {
+        return "You are in the kitchen. There is a large fire. You see an extinguisher";
     }else {
         throw MyException("Invalid request"); // Throw custom exception
     }
@@ -65,7 +68,13 @@ string toEscape:: attic(string inv, string command, string objectIn){
 string toEscape:: office(string inv, string command, string objectIn){
     if(command.compare("open") ==0) {
         if (objectIn == "safe"){
-            return "You have opened the safe and you have found a sheet with codes.";
+            size_t foundK = inv.find("key");
+
+            if (foundK != string::npos){
+                return "you must unlock the safe first";
+            }else {
+                return "You have opened the safe and you have found a sheet with codes.";
+            }
         }
     } else if (command.compare("use") == 0) {
         if (objectIn == "key"){
@@ -151,7 +160,7 @@ string toEscape:: landing(string inv, string command, string objectIn){
         }
     }else if (command.compare("use") == 0){
         if (objectIn == "key"){
-            return "The door unlocks. You can go west";
+            return "The door unlocks. You can go east";
         }
     }else if(command.compare("go") == 0){
         return "true";
@@ -173,7 +182,7 @@ string toEscape:: utility(string inv, string command, string objectIn){
         }
     }else if(command.compare("use") ==0) {
         if (objectIn == "treats"){
-            return "The dog becomes docile and you can go west.";
+            return "The dog becomes docile and you can go east.";
         }
     } else {
         throw MyException("Invalid request"); // Throw custom exception
@@ -184,10 +193,12 @@ string toEscape:: kitchen(string inv, string command, string objectIn){
     if(command.compare("take") == 0){
         if (objectIn == "extinguisher"){
             return "You should use this on the fire";
+        } else if (objectIn == "key"){
+            return ("You take the key. However, when you touch the door it swings open\n You can go north");
         }
     }else if(command.compare("use") == 0){
         if (objectIn == "extinguisher"){
-            return "The fire goes out. You can now exit north";
+            return "The fire goes out. You see a key canging on the hook beside the door";
         }
     }else if(command.compare("go") == 0){
         size_t foundK = inv.find("key");
@@ -202,9 +213,9 @@ string toEscape:: kitchen(string inv, string command, string objectIn){
 }
 
 string toEscape:: lRoom(string inv, string command, string objectIn){
-    if(command.compare("take") == 0){
-        if (objectIn == "extinguisher"){
-            return "You should use this on the fire";
+    if(command.compare("use") == 0){
+        if (objectIn == "key"){
+            return "You have unlocked the door and you can now go north";
         }
     }else if(command.compare("smash") == 0){
         if (objectIn == "boards"){
@@ -223,6 +234,7 @@ string toEscape:: lRoom(string inv, string command, string objectIn){
 }
 
 string toEscape:: getOrder(string currentR, string inv, string command, string objectIn){
+    qDebug() << "currentR: " << currentR;
     if (currentR == "attic"){
         return attic(inv, command, objectIn);
     }else if (currentR == "Office"){

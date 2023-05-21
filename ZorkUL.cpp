@@ -31,7 +31,7 @@ ZorkUL::ZorkUL() {
 }
 
 void ZorkUL::createRooms()  {
-    toEscape *attic, *livingRoom, *bedroom, *utility, *kitchen, *office, *entryway, *bathroom, *landing;
+    toEscape *attic, *livingRoom, *bedroom, *utility, *kitchen, *office, *bathroom, *landing;
     Escape *escape;
     Character *player;
 
@@ -57,8 +57,6 @@ void ZorkUL::createRooms()  {
     office->addItem(new Item("codes", "Bedroom", 3, 2));
     office->addItem(new Item("bookcase", "Office", 2, 0));
     office->addItem(new Item("book", "Office", 1, 4));
-    entryway = new toEscape("Entryway");
-    entryway->addItem(new Item("lock", "Entryway", 2, 4));
     bathroom = new toEscape("Bathroom");
     bathroom->addItem(new Item("uvLight", "Bathroom", 1, 2));
     bathroom->addItem(new Item("lock", "Bathroom", 2, 4));
@@ -73,12 +71,12 @@ void ZorkUL::createRooms()  {
 
     //             (N, E, S, W)
     attic->setExits(office, NULL, NULL, NULL);
-    livingRoom->setExits(entryway, NULL, NULL, NULL);
+    livingRoom->setExits(escape, NULL, NULL, NULL);
     bedroom->setExits(NULL, NULL, landing, NULL);
     utility->setExits(NULL, kitchen, NULL, NULL);
     kitchen->setExits(livingRoom, NULL, NULL, NULL);
     office->setExits(NULL, NULL, NULL, bathroom);
-    entryway->setExits(escape, NULL, NULL, NULL);
+    //entryway->setExits(escape, NULL, NULL, NULL);
     bathroom->setExits(NULL, NULL, bedroom, NULL);
     landing->setExits(NULL, utility, NULL, NULL);
 
@@ -303,13 +301,7 @@ string ZorkUL::processCommand(Command command) {
                     str1 += " item is not in room \n" + currentRoom->longDescription() ;
                 }
                 else {
-                    if(command.getSecondWord() == "safe"){
-                        Item key = currentCharacter->hasItem("key");
-                        if(key.getShortDescription().compare("Nothing") == 0){
-                            str1 += "You must have the key in your inventory. \n" + currentRoom->longDescription() + "\n";
-                            return str1;
-                        }
-                    }else if(command.getSecondWord() == "lock"){
+                    if(command.getSecondWord() == "lock"){
                         Item key = currentCharacter->hasItem("codes");
                         if(key.getShortDescription().compare("Nothing") == 0){
                             str1 += "You must have the codes in your inventory. \n" + currentRoom->longDescription() + "\n";

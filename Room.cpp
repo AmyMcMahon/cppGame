@@ -1,6 +1,4 @@
 #include "Room.h"
-#include "Command.h"
-#include "ZorkUL.h"
 #include "Character.h"
 #include <QDebug>
 
