@@ -28,6 +28,7 @@ private:
 public:
     ZorkUL();
     string printWelcome();
+    string currentR();
     string printAttic();
     string play();
     Item changeVal();

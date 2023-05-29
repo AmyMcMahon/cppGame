@@ -1,6 +1,7 @@
 #include "item.h"
 #include <qDebug>
 
+int invCount = 0;
 Item::Item (string inDescription, string inRoom, int useVal, int inFunction/**, int weaponCheck*/) {
     description = inDescription;
     roomToUse = inRoom;
@@ -21,13 +22,9 @@ int Item::setValue(int useVal)
     return value;
 }
 
-/**void Item::setWeaponCheck(int isWeapon)
-{
-    if(isWeapon > 0 || isWeapon < 0)
-        cout << "Item not a weapon" ;
-    else
-        cout << "Item is a weapon" ;
-}*/
+void Item::setRoomToUse(const string& roomToUse) {
+    this->roomToUse = roomToUse;
+}
 
 string Item::getShortDescription()
 {
@@ -67,4 +64,10 @@ string Item :: whereToUse(Item objectUse){
     }
 }
 
+template <typename T> T invAdd (T x){
+    return  x + invCount ;
+}
 
+template <typename T> T invRemove (T x){
+    return  x - invCount ;
+}

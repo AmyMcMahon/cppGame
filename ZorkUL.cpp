@@ -1,28 +1,40 @@
 #include "qapplication.h"
+#include "qurl.h"
 #include <iostream>
 #include <QDebug>
 #include <QApplication>
-//#include <QMediaPlayer>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 using namespace std;
 #include "ZorkUL.h"
 #include "Character.h"
 #include "Room.h"
+#include "key.h"
 #include "Escape.h"
 #include "toEscape.h"
 #include "mainwindow.h"
 
+bool finishedG = false;
+Key* key1 = new Key("Room description", "Item description", "Room to use");
+
 int main(int argc, char *argv[]) {
+    QMediaPlayer* mediaPlayer = new QMediaPlayer();
+    QAudioOutput* audioOutput = new QAudioOutput;
+    mediaPlayer->setAudioOutput(audioOutput);
+    mediaPlayer->setSource(QUrl::fromLocalFile("C:/Users/admcm/cppGame/heartbeat.mp3"));
+    mediaPlayer->setLoops(QMediaPlayer::Infinite);
+    mediaPlayer->play();
+    if (mediaPlayer->error() != QMediaPlayer::NoError) {
+        qDebug() << "Error setting media: " << mediaPlayer->errorString();
+    }
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
     ZorkUL temp;
-//    QMediaPlayer *player = new QMediaPlayer;
-//    player->setMedia(QUrl::fromLocalFile("/path/to/audio/file.mp3"));
-//    player->setVolume(50);
-//    player->play();
-
     return a.exec();
+    delete mediaPlayer;
+    delete audioOutput;
 }
 
 
@@ -37,6 +49,7 @@ void ZorkUL::createRooms()  {
 
     attic = new toEscape("attic");
     attic->addItem(new Item("key", "Office", 1, 2));
+    attic->addItem(new Key("attic", "keyC", "office"));
     attic->addItem(new Item("flashlight", "attic", 1, 2));
     livingRoom = new toEscape("Living Room");
     livingRoom->addItem(new Item("boards", "Living Room" , 2, 0));
@@ -82,6 +95,8 @@ void ZorkUL::createRooms()  {
 
     currentRoom = attic;
     currentCharacter = player;
+
+    delete key1;
 }
 
 /**
@@ -103,7 +118,6 @@ string ZorkUL::play() {
         //   with ("return new Command(...)")
         delete command;
     }
-    cout << endl;
     return "false";
 }
 
@@ -137,7 +151,7 @@ string ZorkUL::processCommand(Command command) {
                      "[Bedroom]      [Attic]        [Living Room]\n"
                      "        |                                          | \n"
                      "        |                                          | \n"
-                     "[Landing] --- [Utility]   ---   [Kitchen]\n";
+                     "[Landing]  ---  [Utility]   ---   [Kitchen]\n";
         return map;
     }
 
@@ -337,8 +351,14 @@ string ZorkUL::processCommand(Command command) {
                 return "overdefined input";
         else
             return "true"; /**signal to quit*/
+    } else if (commandWord.compare("win") == 0){
+        Escape *escape = new Escape("Escape");
+        currentRoom = escape;
+        return currentRoom->longDescription();
     }
-    return "test";
+    return "something oopsie";
+
+
 }
 /** COMMANDS **/
 string ZorkUL::printHelp() {
@@ -381,3 +401,6 @@ string ZorkUL::go(string direction) {
     }
 }
 
+string ZorkUL:: currentR(){
+    return currentRoom->shortDescription();
+}

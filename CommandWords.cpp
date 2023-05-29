@@ -18,6 +18,7 @@ CommandWords::CommandWords() {
         validCommands.push_back("smash");
         validCommands.push_back("open");
         validCommands.push_back("inventory");
+        validCommands.push_back("win");
     }
 }
 

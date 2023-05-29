@@ -1,4 +1,5 @@
 QT       += core gui
+QT += multimedia
 
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -18,6 +19,7 @@ SOURCES += \
     Room.cpp \
     ZorkUL.cpp \
     item.cpp \
+    key.cpp \
     main.cpp \
     mainwindow.cpp \
     toEscape.cpp
@@ -31,6 +33,7 @@ HEADERS += \
     Room.h \
     ZorkUL.h \
     item.h \
+    key.h \
     mainwindow.h \
     toEscape.h
 

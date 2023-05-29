@@ -7,6 +7,7 @@ Character::Character(string description) {
 }
 void Character::addItem(Item *item) {
     itemsInCharacter.push_back(*item);
+    stringInv.push_back(item->getShortDescription());
 }
 string Character::putItem(Item *item) {
     int location = getItemIndex(item);
@@ -39,9 +40,12 @@ Item Character::hasItem(string name){
 string Character::printInventory()
 {
     string output = "";
-    for (Item i : itemsInCharacter)
+    for (Item i : stringInv)
         output += (i).getShortDescription() + ", ";
     return output;
+//    for (Item i : itemsInCharacter)
+//        output += (i).getShortDescription() + ", ";
+//    return output;
 }
 
 string Character::longDescription()

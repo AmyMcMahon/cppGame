@@ -127,10 +127,10 @@ font: 300 18pt &quot;Calibri Light&quot;;</string>
      <widget class="QFrame" name="frame">
       <property name="geometry">
        <rect>
-        <x>590</x>
-        <y>320</y>
-        <width>211</width>
-        <height>151</height>
+        <x>570</x>
+        <y>380</y>
+        <width>181</width>
+        <height>141</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -195,14 +195,20 @@ font: 300 18pt &quot;Calibri Light&quot;;</string>
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>330</y>
-        <width>331</width>
-        <height>91</height>
+        <x>570</x>
+        <y>30</y>
+        <width>141</width>
+        <height>31</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);</string>
+       <string notr="true">
+background-color:rgb(254, 224, 255);</string>
       </property>
       <property name="text">
        <string/>
@@ -262,6 +268,122 @@ font: 300 18pt &quot;Calibri Light&quot;;</string>
      <widget class="QPushButton" name="invButton">
       <property name="geometry">
        <rect>
+        <x>240</x>
+        <y>10</y>
+        <width>93</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(199, 203, 255)</string>
+      </property>
+      <property name="text">
+       <string>Inventory</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="mapButton">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>10</y>
+        <width>93</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(199, 203, 255)</string>
+      </property>
+      <property name="text">
+       <string>Map</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>90</y>
+        <width>481</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="item2">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>80</y>
+        <width>111</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+background-color:rgb(254, 224, 255);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="item1">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>80</y>
+        <width>111</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+background-color:rgb(254, 224, 255);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="item3">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>220</y>
+        <width>111</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+background-color:rgb(254, 224, 255);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="item4">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>230</y>
+        <width>111</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+background-color:rgb(254, 224, 255);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="useButton">
+      <property name="geometry">
+       <rect>
         <x>350</x>
         <y>450</y>
         <width>93</width>
@@ -272,7 +394,123 @@ font: 300 18pt &quot;Calibri Light&quot;;</string>
        <string notr="true">background-color: rgb(199, 203, 255)</string>
       </property>
       <property name="text">
-       <string>Inventory</string>
+       <string>Use</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="invItem1">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>80</y>
+        <width>111</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="invItem2">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>80</y>
+        <width>111</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="invItem3">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>220</y>
+        <width>111</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="invItem4">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>230</y>
+        <width>111</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="exitInv">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>10</y>
+        <width>93</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(199, 203, 255)</string>
+      </property>
+      <property name="text">
+       <string>Exit</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="openButton">
+      <property name="geometry">
+       <rect>
+        <x>460</x>
+        <y>450</y>
+        <width>93</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(199, 203, 255)</string>
+      </property>
+      <property name="text">
+       <string>Open</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="smashButton">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>450</y>
+        <width>93</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(199, 203, 255)</string>
+      </property>
+      <property name="text">
+       <string>Smash</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="winB">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>310</y>
+        <width>93</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(199, 203, 255)</string>
+      </property>
+      <property name="text">
+       <string>Win</string>
       </property>
      </widget>
     </widget>

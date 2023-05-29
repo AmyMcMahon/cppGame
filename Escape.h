@@ -7,6 +7,7 @@ public:
     Escape(string description);
     inline string longDescription() override;
     inline string getOrder(string currentR, string inv, string command, string objectIn) ;
+    string finalRoom();
 };
 
 #endif // ESCAPE_H

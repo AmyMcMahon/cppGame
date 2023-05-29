@@ -1,6 +1,7 @@
 #ifndef CHARACTER_H_
 #define CHARACTER_H_
 #include "item.h"
+#include "mainwindow.h"
 
 #include <string>
 using namespace std;
@@ -11,6 +12,7 @@ using std::vector;
 class Character {
 private:
     string description;
+    vector<string> stringInv;
 
 
 public:
@@ -21,14 +23,12 @@ public:
     string printInventory();
     vector < Item > itemsInCharacter;
 
-
-
-
 public:
     Character(string description);
     string shortDescription();
     string longDescription();
 
+    friend class MainWindow;
 };
 
 #endif /*CHARACTER_H_*/

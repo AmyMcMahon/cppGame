@@ -24,13 +24,7 @@ string Room::shortDescription() {
 string Room:: getOrder(string currentR, string inv, string command, string objectIn){
     return "true";
 }
-//string Room::longDescription() {
-//    string str1 = "";
-//    if (description == "attic"){
-//        return "You are in the attic, it is pitch black. \n You feel around and find a flashlight.";
-//    }
-//    return "room = " + description + ".\n" + displayItem() + exitString();
-//}
+
 
 string Room::exitString() {
     string returnString = "\nexits =";
@@ -47,6 +41,7 @@ Room* Room::nextRoom(string direction) {
     return next->second; // If there is a room, remove the "second" (Room*)
         // part of the "pair" (<string, Room*>) and return it.
 }
+
 
 void Room::addItem(Item *inItem) {
     //cout <<endl;
@@ -87,8 +82,6 @@ int Room::isItemInRoom(string inString)
     else if (itemsInRoom.size() > 0) {
         int x = (0);
         for (int n = sizeItems; n > 0; n--) {
-            qDebug() << x;
-            qDebug() <<QString::fromStdString(itemsInRoom[x].getShortDescription());
             // compare inString with short description
             int tempFlag = inString.compare( itemsInRoom[x].getShortDescription());
             if (tempFlag == 0) {

@@ -5,7 +5,6 @@
 toEscape::toEscape(string description) : Room(description) {}
 
 string toEscape :: longDescription() {
-    qDebug() << description;
     if (description == "attic"){
         return "You are in the attic, it is pitch black. \n You feel around and find a flashlight.";
     } else if (description == "Office"){
@@ -68,13 +67,14 @@ string toEscape:: attic(string inv, string command, string objectIn){
 string toEscape:: office(string inv, string command, string objectIn){
     if(command.compare("open") ==0) {
         if (objectIn == "safe"){
-            size_t foundK = inv.find("key");
+            return "You have opened the safe and you have found a sheet with codes.";
+//            size_t foundK = inv.find("key");
 
-            if (foundK != string::npos){
-                return "you must unlock the safe first";
-            }else {
-                return "You have opened the safe and you have found a sheet with codes.";
-            }
+//            if (foundK != string::npos){
+//                return "you must unlock the safe first";
+//            }else {
+
+//            }
         }
     } else if (command.compare("use") == 0) {
         if (objectIn == "key"){
@@ -84,7 +84,7 @@ string toEscape:: office(string inv, string command, string objectIn){
         if (objectIn == "codes"){
             return "The safe is now empty. You go investigate the bookcase. \n There is an empty space in one shelf. You see a book on the table.";
         } if (objectIn == "book"){
-            return "You take the book and you can now 'put book'";
+            return "You take the book and you can now 'put book' in the gap";
         }
     } else if (command.compare("put") == 0){
         if (objectIn == "book"){
@@ -234,7 +234,6 @@ string toEscape:: lRoom(string inv, string command, string objectIn){
 }
 
 string toEscape:: getOrder(string currentR, string inv, string command, string objectIn){
-    qDebug() << "currentR: " << currentR;
     if (currentR == "attic"){
         return attic(inv, command, objectIn);
     }else if (currentR == "Office"){

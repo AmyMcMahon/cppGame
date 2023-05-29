@@ -17,6 +17,7 @@ private:
 
 protected:
     string description;
+    string descriptionR;
 
 public:
     int numberOfItems();
