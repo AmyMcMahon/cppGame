@@ -23,7 +23,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     Parser parser;
-    string objectU;
+    string objectU = "null";
     vector<string> stringInv;
     void printOut(string output);
     bool hasF = false;

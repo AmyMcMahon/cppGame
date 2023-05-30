@@ -21,7 +21,7 @@ public:
     bool operator==(const Key& other) const;
     bool operator!=(const Key& other) const;
     bool compareKey(Key key);
-    int bitStructure(string key);
+
 };
 
 #endif // KEY_H

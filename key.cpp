@@ -46,25 +46,4 @@ bool compareKey(Key key){
     return isEqual1;
 }
 
-int bitStructure(string key){
-    struct BitStructure {
-        unsigned int key1 : 3;
-        unsigned int key2 : 3;
-        unsigned int key3 : 3;
-    };
 
-    BitStructure bs;
-    bs.key1 = 1;
-    bs.key2 = 2;
-    bs.key3 = 3;
-
-    if (key =="key1"){
-        return bs.key1;
-    } else if(key == "key2"){
-        return bs.key2;
-    } else if(key == "key3"){
-        return bs.key3;
-    }else{
-        return 0;
-    }
-}

@@ -12,7 +12,7 @@ using std::vector;
 class Character {
 private:
     string description;
-    vector<string> stringInv;
+
 
 
 public:
@@ -21,13 +21,14 @@ public:
     int getItemIndex(Item *item);
     Item hasItem(string name);
     string printInventory();
+    vector<string> stringInv;
     vector < Item > itemsInCharacter;
 
 public:
     Character(string description);
     string shortDescription();
     string longDescription();
-
+    string bitStructure(vector<string>&itemsC, vector<string>&itemsR);
     friend class MainWindow;
 };
 

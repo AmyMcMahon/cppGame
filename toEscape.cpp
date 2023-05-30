@@ -68,9 +68,9 @@ string toEscape:: office(string inv, string command, string objectIn){
     if(command.compare("open") ==0) {
         if (objectIn == "safe"){
             return "You have opened the safe and you have found a sheet with codes.";
-//            size_t foundK = inv.find("key");
+            size_t foundK = inv.find("key");
 
-//            if (foundK != string::npos){
+//           if (foundK != string::npos){
 //                return "you must unlock the safe first";
 //            }else {
 

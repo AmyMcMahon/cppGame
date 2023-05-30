@@ -7,6 +7,11 @@
 #include <QMessageBox>
 
 ZorkUL obj;
+bool hasK = false;
+bool item1O = false;
+bool item2O = false;
+bool item3O = false;
+bool item4O = false;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -40,6 +45,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->invItem2->setVisible(false);
     ui->invItem3->setVisible(false);
     ui->invItem4->setVisible(false);
+    ui->item1->setVisible(false);
+    ui->item2->setVisible(true);
+    ui->item3->setVisible(false);
+    ui->item4->setVisible(false);
     ui->exitInv->setVisible(false);
     ui->item2->setIcon(item2);
     ui->item3->setIcon(QIcon());
@@ -86,82 +95,134 @@ void MainWindow::on_pushButtonE_2_clicked()
 }
 
 void MainWindow::setLabel(string instr){
+    qDebug() << instr;
     string output = obj.getData(instr);
+    qDebug() << output;
     QString str2 = QString::fromStdString(output);
+    qDebug() <<str2;
     ui->label->setText(str2);
     ui->label_3->setText(str2);
     if (instr.find("take") != std::string::npos){
-        ui->item2->setIcon(QIcon());
         string object = instr.substr(5);
-        qDebug() << "object: " << object;
         stringInv.push_back(object);
-        if (objectU == "key" && obj.currentR() == "attic"){
+        if(objectU=="flashlight"){
+            ui->item2->setIcon(QIcon());
+            ui->item2->setVisible(false);
+            item2O = false;
+        }else if (objectU == "key" && obj.currentR() == "attic"){
             ui->pushButtonN->setVisible(true);
+            hasK = true;
             ui->item3->setIcon(QIcon());
+            item3O = false;
+            ui->item3->setVisible(false);
         } else if (objectU == "flashlight"){
             ui->item2->setIcon(QIcon());
+            ui->item2->setVisible(false);
+            item2O = false;
         } else if (objectU == "codes"){
             ui->item3->setIcon(QIcon());
+            ui->item3->setVisible(false);
+            item3O = false;
             QPixmap pixmapF("C:/Users/admcm/cppGame/book.png");
             QIcon item3(pixmapF);
             ui->item1->setIcon(item3);
+            ui->item1->setVisible(true);
+            item1O = true;
         } else if (objectU == "book"){
             ui->item1->setIcon(QIcon());
+            ui->item1->setVisible(false);
+            item1O = false;
             QPixmap pixmapF("C:/Users/admcm/cppGame/bookshelf.png");
-//            ui -> label_3 -> setText("put the book");
             QIcon item3(pixmapF);
             ui->item4->setIcon(item3);
+            ui->item4->setVisible(true);
+            item4O = true;
         }else if (objectU == "uvLight"){
             ui->item2->setIcon(QIcon());
+            ui->item2->setVisible(false);
+            item2O = false;
         } else if (objectU == "hammer"){
             ui->item2->setIcon(QIcon());
+            ui->item2->setVisible(false);
+            item2O = false;
         } else if (objectU == "key"){
             QPixmap pixmapF("C:/Users/admcm/cppGame/ldoor.jpg");
             QIcon item3(pixmapF);
+            ui->item3->setVisible(true);
+            item3O = true;
+        } else if (objectU=="null"){
+            setLabel("You must select an item");
         }
 
     }else if (instr.find("use") != std::string::npos){
-        string object = instr.substr(4);
-        stringInv.erase(std::remove(stringInv.begin(), stringInv.end(), object), stringInv.end());
         if (objectU == "flashlight"){
             QPixmap pixmapF("C:/Users/admcm/cppGame/key.png");
             QIcon item3(pixmapF);
             ui->item3->setIcon(item3);
+            item3O = true;
             ui->invItem1->setIcon(QIcon());
+            ui->invItem1->setVisible(false);
             ui->item2->setIcon(QIcon());
-        } if (objectU == "key" && obj.currentR() == "Office"){
-//            ui->label_3->setText("");
+            item2O = false;
+            stringInv.clear();
+            //stringInv.erase(std::remove(stringInv.begin(), stringInv.end(), "flashlight"), stringInv.end());
+        }else if (objectU == "key" && obj.currentR() == "Office"){
             ui->invItem3->setIcon(QIcon());
-        } if (objectU == "uvLight"){
+            ui->invItem3->setVisible(false);
+            stringInv.clear();
+            hasK = false;
+        }else if (objectU == "uvLight"){
             ui->invItem2->setIcon(QIcon());
+            ui->invItem2->setVisible(false);
             QPixmap pixmapF("C:/Users/admcm/cppGame/combo.jpg");
-//            ui->label_3->setText("You found the codes\n You can open the lock");
             QIcon item3(pixmapF);
             ui->item3->setIcon(item3);
-        } if (objectU == "codes"){
+            item3O = true;
+        }else if (objectU == "codes"){
             ui->invItem1->setIcon(QIcon());
+            ui->invItem1->setVisible(false);
             ui->pushButtonS->setVisible(true);
+        }else if (objectU=="null"){
+            setLabel("You must select an item");
         }
+
     }else if (instr.find("open") != std::string::npos){
         if (objectU == "safe"){
-            QPixmap pixmapF("C:/Users/admcm/cppGame/codes.jpg");
-            QIcon item3(pixmapF);
-            ui->item3->setIcon(item3);
-            ui->item2->setIcon(QIcon());
-//            ui->label_3->setText("You found codes   ");
+            if (!hasK){
+                QPixmap pixmapF("C:/Users/admcm/cppGame/codes.jpg");
+                QIcon item3(pixmapF);
+                ui->item3->setIcon(item3);
+                ui->item3->setVisible(true);
+                ui->item2->setIcon(QIcon());
+                ui->item2->setVisible(false);
+            } else {
+                ui->label_3->setText("you must use the key to open the safe");
+                ui->label->setText("you must use the key to open the safe");
+            }
+
         } else if (objectU == "lock"){
             ui->item3->setIcon(QIcon());
+            ui->item3->setVisible(false);
             ui->pushButtonS->setVisible(true);
+        }else if (objectU=="null"){
+            setLabel("You must select an item");
         }
+
     } else if(instr.find("put") != std::string::npos){
         string object = instr.substr(4);
         stringInv.erase(std::remove(stringInv.begin(), stringInv.end(), object), stringInv.end());
         if (objectU == "book"){
             ui->invItem2->setIcon(QIcon());
+            ui->invItem2->setVisible(false);
             ui->item4->setIcon(QIcon());
+            item4O = false;
             ui->pushButtonW->setVisible(true);
+        }else if (objectU=="null"){
+            setLabel("You must select an item");
         }
+
     } else if(instr.find("win") != std::string::npos){
+        qDebug() << "work";
         ui->label->setText ("Congrats you have escaped from the game");
         ui->label_2->setText("Escape");
         ui->label_3->setText("Congrats you have escaped from the game");
@@ -177,6 +238,9 @@ void MainWindow::setLabel(string instr){
         if (objectU == "vase"){
             QPixmap pixmapF("C:/Users/admcm/cppGame/key.png");
             QIcon item1(pixmapF);
+            ui->item1->setVisible(true);
+        }else if (objectU=="null"){
+            setLabel("You must select an item");
         }
     }
 }
@@ -194,10 +258,11 @@ void MainWindow::on_pushButtonN_clicked()
     ui->pushButtonN->setVisible(false);
     ui->label_2->setText(QString::fromStdString(obj.currentR()));
     if(obj.currentR() == "Office"){
-//        ui->label_3->setText("you need to unlock the safe");
         QPixmap pixmapF("C:/Users/admcm/cppGame/safe.jpg");
         QIcon item2(pixmapF);
         ui->item2->setIcon(item2);
+        ui->item2->setVisible(true);
+        item2O = true;
     }
 }
 
@@ -212,6 +277,8 @@ void MainWindow::on_pushButtonW_clicked()
         QPixmap pixmapF("C:/Users/admcm/cppGame/uv.jpg");
         QIcon item2(pixmapF);
         ui->item2->setIcon(item2);
+        ui->item2->setVisible(true);
+        item2O = true;
     }
 }
 
@@ -227,6 +294,8 @@ void MainWindow::on_pushButtonS_clicked()
         QPixmap pixmapF("C:/Users/admcm/cppGame/hammer.jpg");
         QIcon item2(pixmapF);
         ui->item2->setIcon(item2);
+        ui->item2->setVisible(true);
+        item2O = true;
     } else if(obj.currentR() == "Landing"){
         setLabel("win");
     }
@@ -245,7 +314,6 @@ string ZorkUL::getData(string instr){
 
     Command* command = parser.getCommandGUI(instr);
     string output = processCommand(*command);
-    qDebug() << "get data "<< output;
     return output;
 
 }
@@ -268,17 +336,12 @@ void MainWindow::on_helpButton_clicked()
     string instr = "info";
     string output = obj.getData(instr);
     QString str = QString::fromStdString(output);
-//    ui-> label_3 ->setText(str);
     printOut (output);
 }
 
 
 void MainWindow::on_invButton_clicked()
 {
-    ui->invItem1->setVisible(true);
-    ui->invItem2->setVisible(true);
-    ui->invItem3->setVisible(true);
-    ui->invItem4->setVisible(true);
     ui->item1->setVisible(false);
     ui->item2->setVisible(false);
     ui->item3->setVisible(false);
@@ -294,30 +357,35 @@ void MainWindow::on_invButton_clicked()
 
     for (size_t i = 0; i < stringInv.size(); i++) {
         if (stringInv[i] == "flashlight") {
-            qDebug() << "got";
             QPixmap pixmapF("C:/Users/admcm/cppGame/flashlight.png");
             QIcon invItem1(pixmapF);
+            ui->invItem1->setVisible(true);
             ui->invItem1->setIcon(invItem1);
         } else if (stringInv[i] == "key") {
             QPixmap pixmapF("C:/Users/admcm/cppGame/key.png");
             QIcon invItem3(pixmapF);
             ui->invItem3->setIcon(invItem3);
+            ui->invItem3->setVisible(true);
         } else if (stringInv[i] == "codes") {
             QPixmap pixmapF("C:/Users/admcm/cppGame/codes.jpg");
             QIcon invItem1(pixmapF);
             ui->invItem1->setIcon(invItem1);
+            ui->invItem1->setVisible(true);
         } else if (stringInv[i] == "book") {
             QPixmap pixmapF("C:/Users/admcm/cppGame/book.png");
             QIcon invItem1(pixmapF);
             ui->invItem2->setIcon(invItem1);
+            ui->invItem2->setVisible(true);
         }else if (stringInv[i] == "uvLight") {
             QPixmap pixmapF("C:/Users/admcm/cppGame/uv.jpg");
             QIcon invItem1(pixmapF);
             ui->invItem2->setIcon(invItem1);
+            ui->invItem2->setVisible(true);
         } else if (stringInv[i] == "hammer") {
             QPixmap pixmapF("C:/Users/admcm/cppGame/hammer.jpg");
             QIcon invItem1(pixmapF);
             ui->invItem2->setIcon(invItem1);
+            ui->invItem2->setVisible(true);
         }
     }
 }
@@ -381,14 +449,22 @@ void MainWindow::on_item3_clicked()
 
 void MainWindow::on_exitInv_clicked()
 {
+    if (item1O){
+        ui->item1->setVisible(true);
+    }
+    if (item2O){
+        ui->item2->setVisible(true);
+    }
+    if (item3O){
+        ui->item3->setVisible(true);
+    }
+    if (item4O){
+        ui->item4->setVisible(true);
+    }
     ui->invItem1->setVisible(false);
     ui->invItem2->setVisible(false);
     ui->invItem3->setVisible(false);
     ui->invItem4->setVisible(false);
-    ui->item1->setVisible(true);
-    ui->item2->setVisible(true);
-    ui->item3->setVisible(true);
-    ui->item4->setVisible(true);
     ui->exitInv->setVisible(false);
     ui->label_2->setText(QString::fromStdString(obj.currentR()));
 }
@@ -443,7 +519,6 @@ void MainWindow::on_invItem1_clicked()
 
 void MainWindow::on_winB_clicked()
 {
-
     setLabel("win");
 
 }

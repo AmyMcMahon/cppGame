@@ -1,5 +1,6 @@
 #include "Character.h"
 #include "Room.h"
+#include "toEscape.h"
 #include <qDebug>
 
 Character::Character(string description) {
@@ -57,39 +58,32 @@ string Character::longDescription()
     return ret;
 }
 
-//void Character::addToInventory(Item inString)
-//{
-//   itemsInCharacter.push_back(inString);
-//}
+string bitStructure(vector<string>&itemsC, vector<string>&itemsR){
+    struct BitStructure {
+        unsigned int invN : 2;
+        unsigned int roomN : 3;
+    };
 
-//Item Character:: checkInv(string description){
-//   int sizeItems = (itemsInCharacter.size());
-//   for (int i = 0; i < sizeItems; i++) {
-//        int tempFlag = description.compare( itemsInCharacter[i].getShortDescription());
-//        if (tempFlag == 0) {
-//            return itemsInCharacter[i];
-//        }
-//   }
-//}
+    int cItems = itemsC.size();
+    int rItems = itemsR.size();
 
-//int Character::removeFromInventory(Item inString)
-//{
-//   int sizeItems = (itemsInCharacter.size());
-//   if (itemsInCharacter.size() < 1) {
-//    return false;
-//   }
-//   else if (itemsInCharacter.size() > 0) {
-//    int x = (0);
-//    for (int n = sizeItems; n > 0; n--) {
-//        // compare inString with short description
-//        int tempFlag = inString.getShortDescription().compare( itemsInCharacter[x].getShortDescription());
-//        if (tempFlag == 0) {
-//            itemsInCharacter.erase(itemsInCharacter.begin()+x);
-//        }
-//        x++;
-//    }
-//   }
-//   return -1;
-//}
+    int cBits = log2(cItems) + 1;
+    int rBits = log2(rItems);
+
+    string str1;
+
+    BitStructure bs;
+    bs.invN = 2;
+    bs.roomN = 3;
+
+    if (bs.invN < cBits){
+        str1 += "too many items in inv\n";
+    }
+    if (bs.roomN < rBits){
+        str1 += "too many items in room\n";
+    }
+
+    return str1;
+}
 
 
